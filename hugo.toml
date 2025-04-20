@@ -27,13 +27,12 @@ tabWidth = 4
 post = "/post/:year/:month/:day/:slug/"
 
 [[menu.main]]
-name = "Categories"
-url = "/categories/"
+name = "Posts"
+url = "/post/"
 weight = 1
-[[menu.main]]
-name = "Tags"
-url = "/tags/"
-weight = 2
+[[menu.feed]]
+name = "Github"
+url = "https://github.com/bonzonkim"
 [[menu.feed]]
 name = "Subscribe"
 url = "/index.xml"
@@ -41,4 +40,6 @@ url = "/index.xml"
 [params]
 custom_css = ["css/theme-override.css"]
 description = "A simple, minimal blog for those who love text."
-footer = "Open-Source | [Github](https://github.com/goodroot/hugo-classic) | [Keybase](https://keybase.io/goodroot)"
+footer = "Powered by Hugo with [Hugo-Classic](https://github.com/goodroot/hugo-classic)"
+home = "home"
+post = "post"
