@@ -5,5 +5,5 @@ draft: true
 date: {{ .Date }}
 categories: []
 tags: []
-slug: test
+slug: ""
 ---
