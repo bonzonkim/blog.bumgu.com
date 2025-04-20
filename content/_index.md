@@ -1,22 +1,17 @@
 ---
 title: Home
-description: "The personal writings and expressions of Grayfox, otherwise known as you too and everyone else. It is a loving and silly place."
+description: "My tiny tech logs"
 ---
 <img
   id="foxy"
-  src="/images/grayf0x.jpg"
-  alt="A foxy face">
+  src="/images/spotted_hyena.jpg"
+  alt="A foxy face"
+  width="100px">
 
-## Welcome, friend
+## 안녕하세요
 
-### :purple_heart: :earth_africa: :purple_heart:
-
-Born in [The Abyss](https://en.wikipedia.org/wiki/Edmonton), **Grayfox** - also known as Zerkle Snorp - has spent over two decades fiddling with things on the Internet. Today he does nothing, so stop asking.
-
-Their greatest joys are darkness and its quietudes.
-
-<img src="/images/partywizard.gif">
+개발, DevOps등을 정리하는 기술 블로그입니다.
 
 ---
 
-## Musings
+## Posts
