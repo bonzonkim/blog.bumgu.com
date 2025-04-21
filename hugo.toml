@@ -5,7 +5,7 @@ googleAnalytics = ""
 ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
 languageCode = "en-us"
 theme = "hugo-classic"
-title = "Classic"
+title = "Bumgu"
 
 [markup.goldmark.renderer]
 unsafe = true
@@ -33,9 +33,11 @@ weight = 1
 [[menu.feed]]
 name = "Github"
 url = "https://github.com/bonzonkim"
+weight = 2
 [[menu.feed]]
-name = "Subscribe"
+name = "rss"
 url = "/index.xml"
+weight = 1
 
 [params]
 custom_css = ["css/theme-override.css"]
