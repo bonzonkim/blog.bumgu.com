@@ -48,7 +48,7 @@ curl --cacert /etc/ssl/etcd/ssl/ca.pem \
 
 ### 3. Prometheus에 인증서 마운트
 #### 3-1. target 작성
-기존 prometheus의 target설정을 `prometheus.prometheusSpec.additionalScrapeConfigsSecret` 으로 관리했다. (타겟파일을 작성하고 그 파일을 기반으로 시크릿을 생성하고 생성한 시크릿을 참조하는 방식) [참고](https://velog.io/@kellyb9/Kubernetes-kube-prometheus-stack-scrape-target%EC%9D%84-%EC%99%B8%EB%B6%80-secret%EC%9C%BC%EB%A1%9C-%EA%B4%80%EB%A6%AC)
+기존 prometheus의 target설정을 `prometheus.prometheusSpec.additionalScrapeConfigsSecret` 으로 관리했다. (타겟파일을 작성하고 그 파일을 기반으로 시크릿을 생성하고 생성한 시크릿을 참조하는 방식) [참고](https://blog.bumgu.com/post/2024/12/22/kube_prometheus_stack_scrape_target_with_secret/)
 
 우선 target을 작성한다.
 ```yaml

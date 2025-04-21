@@ -278,7 +278,7 @@ spec:
 ---
 
 ### 마무리
-`metallb`를 설치해서 ingress까지 사용해보는 것을 목표로 했으나, metallb의 `ipAddressPool`을 apply하면 `kubectl` 이 apiServer에 접근을 못하는 오류가 생겨서 차후 해결후 따로 작성하도록 하겠습니다. [여기서 확인](https://velog.io/@kellyb9/kubespray-metllb)
+`metallb`를 설치해서 ingress까지 사용해보는 것을 목표로 했으나, metallb의 `ipAddressPool`을 apply하면 `kubectl` 이 apiServer에 접근을 못하는 오류가 생겨서 차후 해결후 따로 작성하도록 하겠습니다. [여기서 확인](https://blog.bumgu.com/post/2024/09/22/kubespray_metallb_install/)
 
 그동안은 `kubeadm`을 이용해서 노드마다 같은 설정을 반복해주는 번거로움이 있었는데, 처음으로 `kubespray`을 이용해 자동 클러스터링 작업을 했습니다. 
 
