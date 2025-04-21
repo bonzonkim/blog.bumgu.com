@@ -278,10 +278,10 @@ export default async function Home() {
 
 # 5. 결과 차이
 - CSR
-![](/images/post/2-CSR_SSR_data_fetching/csr결과.gif)
+![](/images/post/2-CSR_SSR_data_fetching/4.gif)
 
 - SSR
-![](/images/post/2-CSR_SSR_data_fetching/ssr결과.gif)
+![](/images/post/2-CSR_SSR_data_fetching/5.gif)
 
 CSR은 초기 로딩이후 데이터를 패칭해오고 보여주기 때문에 잠깐의 로딩시간이 있는반면,
 SSR은 데이터를 미리 캐싱해놓기 때문에 기다림 없이 바로 데이터를 보여주고 있습니다.
