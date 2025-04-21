@@ -1,7 +1,6 @@
 ---
 title: "Debian에서 k3s 클러스터 구축해보기"
 author: Bumgu
-draft: true
 date: 2024-06-30
 categories: 
     - DevOps

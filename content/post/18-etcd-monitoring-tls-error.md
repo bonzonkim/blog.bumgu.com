@@ -1,7 +1,6 @@
 ---
 title: "Etcd 모니터링 tls 에러 해결"
 author: Bumgu
-draft: true
 date: 2025-01-18
 categories: 
     - DevOps

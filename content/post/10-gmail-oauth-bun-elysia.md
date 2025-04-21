@@ -1,7 +1,6 @@
 ---
 title: "gmail OAuth2 토큰 발급(bun, elysia)"
 author: Bumgu
-draft: true
 date: 2024-06-19
 categories: 
     - Developer

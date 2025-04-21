@@ -1,7 +1,6 @@
 ---
 title: "Go - http.HandleFunc와 http.HandlerFunc의 차이"
 author: Bumgu
-draft: true
 date: 2025-01-07
 categories: 
     - Developer
