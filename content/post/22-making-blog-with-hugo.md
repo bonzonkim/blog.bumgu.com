@@ -1,8 +1,7 @@
 ---
 title: "Hugo를 사용해 블로그 만들기"
 author: Bumgu
-draft: true
-date: 2025-04-22T19:29:28+09:00
+date: 2025-04-22T20:42:28+09:00
 categories: []
 tags: 
     - Hugo
