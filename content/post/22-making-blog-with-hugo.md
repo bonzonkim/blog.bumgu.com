@@ -174,8 +174,22 @@ Type: CNAME
 Name: blog  
 Content: <github username>.github.io
 ```
-위와 같이 DNS 레코드를 생성하면 준비 끝입니다.
-
+위와 같이 DNS 레코드를 생성하고, [doggo](https://github.com/mr-karan/doggo)로 DNS조회 한번 때려줍니다.  
+```sh
+➜ doggo blog.bumgu.com
+NAME                    TYPE    CLASS   TTL     ADDRESS                 NAMESERVER
+blog.bumgu.com.         CNAME   IN      217s    bonzonkim.github.io.    8.8.8.8:53
+bonzonkim.github.io.    A       IN      3517s   185.199.109.153         8.8.8.8:53
+bonzonkim.github.io.    A       IN      3517s   185.199.110.153         8.8.8.8:53
+bonzonkim.github.io.    A       IN      3517s   185.199.108.153         8.8.8.8:53
+bonzonkim.github.io.    A       IN      3517s   185.199.111.153         8.8.8.8:53
+blog.bumgu.com.         CNAME   IN      300s    bonzonkim.github.io.    8.8.4.4:53
+bonzonkim.github.io.    A       IN      3600s   185.199.111.153         8.8.4.4:53
+bonzonkim.github.io.    A       IN      3600s   185.199.110.153         8.8.4.4:53
+bonzonkim.github.io.    A       IN      3600s   185.199.108.153         8.8.4.4:53
+bonzonkim.github.io.    A       IN      3600s   185.199.109.153         8.8.4.4:53
+```
+정상적으로 나오면 준비끝 입니다.
 # 8. 완성
 모든 준비가 끝났으니 Github원격 저장소에 푸쉬합니다.  
 푸쉬하고, CI workflow가 끝나길 기다리면...  
