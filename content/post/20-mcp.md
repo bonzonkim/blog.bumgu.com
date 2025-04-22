@@ -300,7 +300,7 @@ CREATE TABLE users (
      password VARCHAR(100) NOT NULL
  );
 ```
-test 데이터베이스를 만들고, user 테이블을 하나 생성합니다.w
+test 데이터베이스를 만들고, user 테이블을 하나 생성합니다.
 
 ![](/images/post/20-MCP/12.png)
 
