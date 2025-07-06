@@ -10,6 +10,9 @@ tags:
     - Openstack
 slug: "building_private_cloud_using_openstack-1"
 ---
+[Openstack 구축 2편](https://blog.bumgu.com/post/2025/07/06/building_private_cloud_using_openstack-2/)
+
+---
 
 # 발단
 VM이 더이상 유지보수도 안되고 라이센스도 끝나서 대체 하기로 마음을 먹고 Openstack 구축을 시작했다.  
@@ -365,3 +368,8 @@ password = PLACEMENT_PASS
 
 
 글이 너무 길어질거같아 더 복잡한 Nova, Neutron은 다음 글로 작성하겠습니다.
+
+---
+
+
+[Openstack 구축 2편](https://blog.bumgu.com/post/2025/07/06/building_private_cloud_using_openstack-2/)
