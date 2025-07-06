@@ -821,8 +821,8 @@ cirros의 기본사용자는 `cirros`이다.
 
 ![image](/images/post/26-openstack2/1.png)
 
-글을 적는 시점으로 난 글만 적었지 실제 테스트 인스턴스는 생성하지 않았다.  
-다음글에서 Terraform, Pyton으로 IaC 적용 및 실제 인스턴스 생성을 하겠다!
+글을 적는 시점으로 난 글만 적었지 실제 테스트 인스턴스는 생성하지 않았습니다.  
+다음글에서 Terraform, Pyton으로 IaC 적용 및 실제 인스턴스 생성을 하겠습니다!
 
 ---
 
