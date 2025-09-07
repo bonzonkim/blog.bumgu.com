@@ -179,6 +179,38 @@ spec:
 ```
 이렇게 되어있습니다. 이는 http 요청 header안에 `end-user`의 값이 `jason`일 경우에는 v2이고, 그 이외에는 v3로 라우팅 한다는 뜻입니다.  
 여기에 end-user가 `john`이면 v1으로 라우팅 되는 룰만 추가해보겠습니다.
+```yaml
+# virtual-service-jason-v2-john-v1.yaml
+apiVersion: networking.istio.io/v1
+kind: VirtualService
+metadata:
+  name: reviews
+spec:
+  hosts:
+  - reviews
+  http:
+  - match:
+    - headers:
+        end-user:
+          exact: jason
+    route:
+    - destination:
+        host: reviews
+        subset: v2
+  - match:
+    - headers:
+        end-user:
+          exact: john
+    route:
+    - destination:
+        host: reviews
+        subset: v1
+  - route:
+    - destination:
+        host: reviews
+        subset: v3
+```
+위 파일을 생성하고 apply 해줍니다.
 * jason 유저 (v2)
 ![](/images/post/27-play-istio/7.png)
 * john 유저 (v1)
