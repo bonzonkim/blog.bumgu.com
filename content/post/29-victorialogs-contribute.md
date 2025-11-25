@@ -1,8 +1,8 @@
 ---
 title: "오픈소스 VictoriaMetrics 에 기여하기"
 author: Bumgu
-draft: true
-date: 2025-11-25T20:42:21+09:00
+draft: false
+date: 2025-11-25T22:50:21+09:00
 categories: 
     - DevOps
     - SRE
