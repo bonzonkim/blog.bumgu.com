@@ -1,7 +1,7 @@
 ---
 title: "Terraform으로 GKE를 구축하고 Tailscale로 접근하기"
 author: Bumgu
-draft: true
+draft: false
 date: 2025-12-18T14:21:02+09:00
 categories: 
     - DevOps
