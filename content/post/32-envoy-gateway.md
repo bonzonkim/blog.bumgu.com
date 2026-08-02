@@ -1,7 +1,7 @@
 ---
 title: "Nginx와 Envoy Gateway의 라우팅"
 author: Bumgu
-draft: true
+draft: false
 date: 2026-08-02T16:07:35+09:00
 categories:
     - DevOps
