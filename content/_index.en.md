@@ -10,7 +10,7 @@ description: "A technical blog about software development and DevOps."
 
 ## Hello
 
-A technical blog where I write about what I learn and experience in software development and DevOps.
+I do tek.
 
 ---
 
