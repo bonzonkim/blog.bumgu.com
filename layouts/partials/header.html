@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.LanguageCode }}">
   <head>
-
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
-    <link rel="manifest" href="/images/site.webmanifest">
-
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ "images/apple-touch-icon.png" | relURL }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ "images/favicon-32x32.png" | relURL }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ "images/favicon-16x16.png" | relURL }}">
+    <link rel="manifest" href="{{ "images/site.webmanifest" | relURL }}">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{{ if .Description }}{{ .Description }}{{ else }}{{ .Site.Params.Description }}{{ end }}">
@@ -18,31 +16,37 @@
     {{- end }}
     {{ partial "head_custom.html" . }}
   </head>
-
   <body>
     <header>
-      <nav>
+      <nav aria-label="Main navigation">
         <ul>
           {{ $title := lower .Title }}
           {{ $section := lower .Section }}
           <li class="pull-left {{ if .IsHome }}current{{ end }}">
-            <a href="{{ .Site.BaseURL }}">~/{{ lower .Site.Params.Home }}</a>
+            <a href="{{ .Site.Home.RelPermalink }}">~/{{ lower .Site.Params.Home }}</a>
           </li>
           {{ range .Site.Menus.main }}
           {{ $name := lower .Name }}
-          <li class="pull-left {{ if eq $name $title }}current{{ else if eq $section $name }}current{{ else if eq $title (pluralize $name) }}current{{ end }}">
-            <a href="{{ .URL }}">~/{{ lower .Name }}</a>
+          {{ $url := .URL }}
+          {{ if and (hasPrefix $url "/") (not (hasPrefix $url "//")) }}{{ $url = relLangURL (strings.TrimPrefix "/" $url) }}{{ end }}
+          {{ $menuSection := path.Base (strings.TrimSuffix "/" .URL) }}
+          <li class="pull-left {{ if eq $name $title }}current{{ else if eq $section $name }}current{{ else if eq $title (pluralize $name) }}current{{ else if and (eq $section "post") (or (eq $menuSection "post") (eq $menuSection "posts")) }}current{{ end }}">
+            <a href="{{ $url }}">~/{{ lower .Name }}</a>
           </li>
-          {{end}}
-
+          {{ end }}
           {{ range .Site.Menus.feed }}
-          {{ $name := lower .Name}}
-          <li class="pull-right">
-            <a href="{{ .URL }}">~/{{ lower .Name}}</a>
+          {{ $url := .URL }}
+          {{ if and (hasPrefix $url "/") (not (hasPrefix $url "//")) }}{{ $url = relLangURL (strings.TrimPrefix "/" $url) }}{{ end }}
+          <li class="pull-right"><a href="{{ $url }}">~/{{ lower .Name }}</a></li>
+          {{ end }}
+          {{ $ko := .Site.Home.RelPermalink }}{{ $en := .Site.Home.RelPermalink }}
+          {{ if eq .Site.Language.Lang "ko" }}{{ $en = "/en/" }}{{ else }}{{ $ko = "/" }}{{ end }}
+          {{ range .Translations }}{{ if eq .Language.Lang "ko" }}{{ $ko = .RelPermalink }}{{ else if eq .Language.Lang "en" }}{{ $en = .RelPermalink }}{{ end }}{{ end }}
+          <li class="language-switch" aria-label="Choose language">
+            <a href="{{ $ko }}" lang="ko" hreflang="ko" {{ if eq .Site.Language.Lang "ko" }}aria-current="page"{{ end }}>KO</a>
+            <span aria-hidden="true">/</span>
+            <a href="{{ $en }}" lang="en" hreflang="en" {{ if eq .Site.Language.Lang "en" }}aria-current="page"{{ end }}>EN</a>
           </li>
-          {{end}}
-
         </ul>
       </nav>
     </header>
-

@@ -1,11 +1,12 @@
-baseurl = "https://blog.bumgu.com"
+baseURL = "https://blog.bumgu.com/"
 enableEmoji = true
 footnotereturnlinkcontents = "↩"
 googleAnalytics = ""
 ignoreFiles = ["\\.Rmd$", "_files$", "_cache$"]
-languageCode = "en-us"
 theme = "hugo-classic"
 title = "Bumgu"
+defaultContentLanguage = "ko"
+defaultContentLanguageInSubdir = false
 
 [markup.goldmark.renderer]
 unsafe = true
@@ -26,22 +27,56 @@ tabWidth = 4
 [permalinks]
 post = "/post/:year/:month/:day/:slug/"
 
-[[menu.main]]
-name = "Posts"
+[languages.ko]
+languageCode = "ko-KR"
+languageName = "한국어"
+weight = 1
+
+[languages.ko.params]
+description = "개발과 DevOps를 기록하는 기술 블로그입니다."
+home = "홈"
+post = "글"
+
+[[languages.ko.menus.main]]
+name = "글"
 url = "/post/"
 weight = 1
-[[menu.feed]]
-name = "Github"
+
+[[languages.ko.menus.feed]]
+name = "GitHub"
 url = "https://github.com/bonzonkim"
 weight = 2
-[[menu.feed]]
-name = "rss"
+
+[[languages.ko.menus.feed]]
+name = "RSS"
 url = "/index.xml"
+weight = 1
+
+[languages.en]
+languageCode = "en-US"
+languageName = "English"
+weight = 2
+
+[languages.en.params]
+description = "A technical blog about software development and DevOps."
+home = "Home"
+post = "Posts"
+
+[[languages.en.menus.main]]
+name = "Posts"
+url = "/en/post/"
+weight = 1
+
+[[languages.en.menus.feed]]
+name = "GitHub"
+url = "https://github.com/bonzonkim"
+weight = 2
+
+[[languages.en.menus.feed]]
+name = "RSS"
+url = "/en/index.xml"
 weight = 1
 
 [params]
 custom_css = ["css/theme-override.css"]
-description = "A simple, minimal blog for those who love text."
 footer = "Powered by Hugo with [Hugo-Classic](https://github.com/goodroot/hugo-classic)"
-home = "home"
-post = "post"

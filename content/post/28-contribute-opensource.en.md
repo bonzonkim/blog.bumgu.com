@@ -1,0 +1,260 @@
+---
+title: "Contributing to Open Source"
+author: Bumgu
+draft: false
+date: 2025-10-22T15:20:22+09:00
+categories: 
+    - "dev"
+tags: 
+    - "typescript"
+    - "ci"
+    - "opensource"
+slug: ""
+---
+I often use Github Actions as my CI tool.  
+As you all know, Github Actions workflows are written in YAML, and many of us have probably received a CI job failed notification because of indentation or incorrect syntax.  
+Then I came across this post on [Twitter](https://x.com/JLarky/status/1980024323663638773):
+![image](/images/post/28-contribute-opensource/1.png)
+This `gha-ts` project is open source software that generates a `.yml` file when you write a workflow in TypeScript.  
+It lets you generate type-safe workflows without worrying about indentation or syntax.  
+I noticed that `setup` already supported node, java, python, go, and dotnet, but not bun, so I decided to add bun setup.
+
+
+---
+# Code
+First, I cloned the [repository](https://github.com/JLarky/gha-ts) and created a branch.
+All the `setup` functions and interfaces are declared in the `/src/actions/setup.ts` file, so I wrote the code there.
+### Existing code
+```typescript
+import { uses, UsesStep } from "../workflow-types";
+import { buildWith, CamelToKebabMap } from "./common";
+
+export interface SetupNodeOptions {
+  nodeVersion?: string; // node-version
+  cache?: "npm" | "pnpm" | "yarn";
+  cacheDependencyPath?: string; // cache-dependency-path
+  registryUrl?: string; // registry-url
+  scope?: string; // scope
+  alwaysAuth?: boolean | string; // always-auth
+  nodeVersionFile?: string; // node-version-file
+  architecture?: string; // architecture
+  checkLatest?: boolean | string; // check-latest
+  token?: string; // token
+  mirror?: string; // mirror
+  mirrorToken?: string; // mirror-token
+}
+const setupNodeMap: CamelToKebabMap = {
+  nodeVersion: "node-version",
+  nodeVersionFile: "node-version-file",
+  cacheDependencyPath: "cache-dependency-path",
+  registryUrl: "registry-url",
+  alwaysAuth: "always-auth",
+  checkLatest: "check-latest",
+  mirrorToken: "mirror-token",
+};
+export function setupNode(options: SetupNodeOptions = {}): UsesStep {
+  return uses("actions/setup-node@v4", buildWith(options, setupNodeMap));
+}
+/* ... omitted for brevity ... */
+export interface SetupDotnetOptions {
+  dotnetVersion?: string; // dotnet-version
+  dotnetQuality?: string; // dotnet-quality
+  globalJsonFile?: string; // global-json-file
+  sourceUrl?: string; // source-url
+  owner?: string; // owner
+  configFile?: string; // config-file
+  cache?: boolean | string; // cache
+  cacheDependencyPath?: string; // cache-dependency-path
+}
+const setupDotnetMap: CamelToKebabMap = {
+  dotnetVersion: "dotnet-version",
+  dotnetQuality: "dotnet-quality",
+  globalJsonFile: "global-json-file",
+  sourceUrl: "source-url",
+  configFile: "config-file",
+  cacheDependencyPath: "cache-dependency-path",
+};
+export function setupDotnet(opts: SetupDotnetOptions = {}): UsesStep {
+  return uses("actions/setup-dotnet@v4", buildWith(opts, setupDotnetMap));
+}
+```
+The code is simple. All I needed was an interface defining the options (version, etc.) passed to `set-up`, a Map mapping those options to kebab-case, and a `setup` function that uses them to return the result.  
+(As of October 22, 2025, `CamelToKebabMap` has been removed.)  
+I wrote the code as follows.  
+### Code I added
+```typescript
+export interface SetupBunOptions {
+  bunVersion?: string; // bun-version
+  bunVersionFile?: string; // bun-version-file
+  bunDownloadUrl?: string; // bun-download-url
+  registryUrl?: string; // registry-url
+  scope?: string; // scope
+}
+const setupBunMap: CamelToKebabMap = {
+  bunVersion: "bun-version",
+  bunVersionFile: "bun-version-file",
+  bunDownloadUrl: "bun-download-url",
+  registryUrl: "registry-url",
+  scope: "scope",
+};
+export function setupBun(opts: SetupBunOptions = {}): UsesStep {
+  return uses("oven-sh/setup-bun@v2", buildWith(opts, setupBunMap));
+}
+```
+I took `SetupBunOptions` from the [bun GitHub repository](https://github.com/oven-sh/bun).
+
+### Writing tests
+To check that it works correctly, I wrote a test file under `/tests/`.
+```typescript
+import { describe, it, expect } from "bun:test";
+import { setupBun } from "../src/actions/setup";
+import { createSerializer } from "../src/render";
+import { Workflow } from "../src/workflow-types";
+
+const renderWorkflow = (workflow: Workflow) => {
+  return createSerializer(workflow, Bun.YAML.stringify).stringifyWorkflow();
+};
+
+describe("setupBun", () => {
+  it("should render with default options", () => {
+    const workflow: Workflow = {
+      name: "Test Workflow",
+      on: "push",
+      jobs: {
+        test: {
+          "runs-on": "ubuntu-latest",
+          steps: [setupBun()],
+        },
+      },
+    };
+    expect(renderWorkflow(workflow)).toMatchInlineSnapshot(`
+      "# Do not modify!
+      # This file was generated by https://github.com/JLarky/gha-ts
+
+      name: Test Workflow
+      "on": push
+      jobs: 
+        test: 
+          runs-on: ubuntu-latest
+          steps: 
+            - uses: oven-sh/setup-bun@v2
+      "
+    `);
+  });
+
+  it("should render with a specific bun version", () => {
+    const workflow: Workflow = {
+      name: "Test Workflow",
+      on: "push",
+      jobs: {
+        test: {
+          "runs-on": "ubuntu-latest",
+          steps: [setupBun({ bunVersion: "1.0.0" })],
+        },
+      },
+    };
+    expect(renderWorkflow(workflow)).toMatchInlineSnapshot(`
+      "# Do not modify!
+      # This file was generated by https://github.com/JLarky/gha-ts
+
+      name: Test Workflow
+      "on": push
+      jobs: 
+        test: 
+          runs-on: ubuntu-latest
+          steps: 
+            - uses: oven-sh/setup-bun@v2
+              with: 
+                bun-version: 1.0.0
+      "
+    `);
+  });
+
+  it("should render with all options", () => {
+    const workflow: Workflow = {
+      name: "Test Workflow",
+      on: "push",
+      jobs: {
+        test: {
+          "runs-on": "ubuntu-latest",
+          steps: [
+            setupBun({
+              bunVersion: "latest",
+              bunVersionFile: ".bun-version",
+              bunDownloadUrl: "https://example.com/bun.zip",
+              registryUrl: "https://registry.npmjs.org",
+              scope: "@my-scope",
+            }),
+          ],
+        },
+      },
+    };
+    expect(renderWorkflow(workflow)).toMatchInlineSnapshot(`
+      "# Do not modify!
+      # This file was generated by https://github.com/JLarky/gha-ts
+
+      name: Test Workflow
+      "on": push
+      jobs: 
+        test: 
+          runs-on: ubuntu-latest
+          steps: 
+            - uses: oven-sh/setup-bun@v2
+              with: 
+                bun-version: latest
+                bun-version-file: .bun-version
+                bun-download-url: https://example.com/bun.zip
+                registry-url: https://registry.npmjs.org
+                scope: "@my-scope"
+      "
+    `);
+  });
+});
+```
+The result is ![image](/images/post/28-contribute-opensource/2.png)
+The tests pass as expected.
+
+# Testing
+Now I'll actually create a workflow in TypeScript and check whether it generates the yml correctly.
+
+* `.github/workflows/setup-bun.ts`
+```typescript
+#!/usr/bin/env bun
+import { YAML } from "bun";
+import { workflow } from "../../src/workflow-types";
+import { checkout, setupBun } from "../../src/actions";
+import { generateWorkflow } from "../../src/cli";
+
+const wf = workflow({
+  name: "Example workflow",
+  on: {
+    push: { branches: ["main"] },
+    pull_request: {},
+  },
+  jobs: {
+    exampleJobBun: {
+      "runs-on": "ubuntu-latest",
+      steps: [
+        checkout({ fetchDepth: 0 }),
+        setupBun({ bunVersion: "1.3.0" }),
+        { name: "Test", run: "bun --version" },
+      ],
+    },
+  },
+});
+
+await generateWorkflow(wf, YAML.stringify, import.meta.url);
+```
+Grant this file execute permission and run it.
+![image](/images/post/28-contribute-opensource/3.png)
+Now that I've confirmed it works correctly, I'll commit and submit a PR!
+
+# Result
+![image](/images/post/28-contribute-opensource/4.png)
+It was merged!
+
+
+---
+
+I've always wanted to become an open-source contributor, but I never got around to contributing to large projects like Kubernetes or Grafana because they felt daunting.  
+This time, I had a great experience contributing to a project with more than 100 stars.  

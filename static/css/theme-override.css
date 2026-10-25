@@ -1,3 +1,38 @@
 footer {
   font-size: 90%;
 }
+
+/* The theme's fixed header height cannot contain wrapped navigation rows. */
+header {
+  height: auto !important;
+}
+
+header nav ul {
+  display: flow-root;
+}
+
+.language-switch {
+  float: right;
+  margin-left: 0.75rem;
+  white-space: nowrap;
+}
+
+.language-switch a {
+  padding: 0.2rem 0.35rem;
+  text-decoration: none;
+}
+
+.language-switch a[aria-current="page"] {
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+@media (max-width: 520px) {
+  .language-switch {
+    float: none;
+    clear: both;
+    margin: 0.5rem 0 0;
+    text-align: right;
+  }
+}
